@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:negup_solutions_flutter/home/home_view.dart';
+import 'package:negup_solutions_flutter/home/state/get_data.dart';
 import 'package:negup_solutions_flutter/home/state/notification_permission_handler.dart';
 import 'package:negup_solutions_flutter/home/state/permission_provider.dart';
 import 'package:negup_solutions_flutter/home/state/start_location_update.dart';
@@ -10,7 +11,8 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (_) => PermissionProvider()),
       ChangeNotifierProvider(create: (_)=>NotificationPermissionProvider()),
-      ChangeNotifierProvider(create: (_)=>LocationProvider())
+      ChangeNotifierProvider(create: (_)=>LocationProvider()),
+      ChangeNotifierProvider(create: (_)=>GetDataFromShared())
     ],
     child: const MyApp(),
   ));
