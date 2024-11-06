@@ -1,12 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:negup_solutions_flutter/constants/colors.dart';
-import 'package:negup_solutions_flutter/home/state/get_data.dart';
-import 'package:negup_solutions_flutter/home/state/notification_permission_handler.dart';
-import 'package:negup_solutions_flutter/home/state/permission_provider.dart';
-import 'package:negup_solutions_flutter/home/state/start_location_update.dart';
+import 'package:negup_solutions_flutter/home/providers/get_data.dart';
+import 'package:negup_solutions_flutter/home/providers/notification_permission_handler.dart';
+import 'package:negup_solutions_flutter/home/providers/permission_provider.dart';
+import 'package:negup_solutions_flutter/home/providers/start_location_update.dart';
 import 'package:negup_solutions_flutter/widgets/home_button.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +20,8 @@ class ButtonSection extends StatelessWidget {
     return isTabView
         ? GridView.count(
             crossAxisCount: 2,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0,
+            crossAxisSpacing: 30.0,
+            mainAxisSpacing: 30.0,
             childAspectRatio: 4,
             children: buildButtonList(context),
           )
@@ -86,20 +85,42 @@ class ButtonSection extends StatelessWidget {
                         child: const Text('Yes'))
                   ],
                 );
-                
               });
-                if (isStarted == true) {
-      await context.read<LocationProvider>().startLocationUpdates();
-        await context.read<GetDataFromShared>().getData();
-
-    }
+          if (isStarted == true) {
+            await context.read<LocationProvider>().startLocationUpdates();
+            await context.read<GetDataFromShared>().getData();
+          }
         },
         textColor: AppColors.whiteColor,
       ),
       HomeButtons(
         buttonColor: AppColors.redColor,
         buttontext: 'Stop Location Update',
-        onTap: () {},
+        onTap: () async {
+          final isStop = await showDialog<bool>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Stop Location update'),
+                  content: const Text('Do you want to stop location updates?'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: const Text('No')),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                        child: const Text('Yes'))
+                  ],
+                );
+              });
+          if (isStop == true) {
+            await context.read<LocationProvider>().stopLocationUpdates();
+          }
+        },
         textColor: AppColors.whiteColor,
       ),
     ];

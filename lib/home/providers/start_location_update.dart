@@ -11,6 +11,7 @@ class LocationProvider with ChangeNotifier {
    List<Map<String, double>> locations = [];
   bool _isUpdating = false;
   FlutterLocalNotificationsPlugin? localNotificationsPlugin;
+    late Future<void> locationFetchingFuture;
 
   LocationProvider() {
     localNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -33,13 +34,14 @@ class LocationProvider with ChangeNotifier {
     _isUpdating = true;
     notifyListeners();
     await showNotification("Location fetching started");
-    fetchLocationtimly();
+    locationFetchingFuture = fetchLocationtimly();
   }
 
   Future<void> fetchLocationtimly() async {
     while (_isUpdating) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      await addLocation(position.latitude, position.longitude);
+    double speed = position.speed;
+      await addLocation(position.latitude, position.longitude,speed);
 
      
       await Future.delayed(const Duration(seconds: 10));
@@ -48,8 +50,8 @@ class LocationProvider with ChangeNotifier {
   }
 
   //this function is used to save the data comming into the shared preferences as a list so that we could get all the data 
-   Future<void> addLocation(double latitude, double longitude) async {
-    locations.add({'latitude': latitude, 'longitude': longitude});
+   Future<void> addLocation(double latitude, double longitude,double speed) async {
+    locations.add({'latitude': latitude, 'longitude': longitude,'speed':speed});
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jsonString = json.encode(locations);
     await prefs.setString('locations', jsonString);
@@ -70,9 +72,10 @@ class LocationProvider with ChangeNotifier {
     await localNotificationsPlugin!.show(0, 'Notification', message, platformChannelSpecifics);
   }
 
-  void stopLocationUpdates() {
+ Future<void> stopLocationUpdates() async {
     _isUpdating = false;
+    await locationFetchingFuture; 
     notifyListeners();
+    await showNotification("Location fetching stopped");
   }
-
 }

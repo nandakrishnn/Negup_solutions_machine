@@ -9,11 +9,11 @@ class GetDataFromShared with ChangeNotifier {
   Timer? _timer;
     GetDataFromShared() {
   
-    _startPeriodicUpdate();
+    recusiveCall();
   }
-    void _startPeriodicUpdate() {
+    void recusiveCall() {
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-      print('updated updated');
+      debugPrint('updated updated');
       getData();
     });
   }
