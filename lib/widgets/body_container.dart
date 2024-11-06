@@ -21,49 +21,51 @@ class BodyContainerFooter extends StatelessWidget {
       padding: const EdgeInsets.all(14.0),
       child: Container(
         padding: const EdgeInsets.all(9),
-        height: MediaQuery.of(context).size.height * .088,
+        // height: MediaQuery.of(context).size.height * .088,
         decoration: BoxDecoration(
           color: AppColors.bottomContainerColor,
           borderRadius: BorderRadius.circular(6),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              request,
-              style: const TextStyle(
-                color: AppColors.blackColor,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                request,
+                style: const TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            AppConstants.kheight10,
-            Row(
-              children: [
-                LatLangText(
-                  headText: 'Lat: ',
-                  subtext: '' + '${lat.length > 5 ? lat.substring(0, 5) : lat}',
-                ),
-                AppConstants.kwidth20,
-                LatLangText(
-                  headText: 'Lng: ',
-                  subtext:
-                      '' + '${long.length > 5 ? long.substring(0, 5) : long}',
-                ),
-                AppConstants.kwidth20,
-                LatLangText(
-                  headText: 'Speed: ',
-                  subtext: speed == 0
-                      ? '00m'
-                      : (speed < 1
-                                  ? '${(speed * 100000).round()}m'
-                                  : '${speed.toStringAsFixed(0)}m')
-                              .substring(0, 2) +
-                          'm',
-                )
-              ],
-            ),
-          ],
+              AppConstants.kheight10,
+              Row(
+                children: [
+                  LatLangText(
+                    headText: 'Lat: ',
+                    subtext: '' + '${lat.length > 5 ? lat.substring(0, 5) : lat}',
+                  ),
+                  AppConstants.kwidth20,
+                  LatLangText(
+                    headText: 'Lng: ',
+                    subtext:
+                        '' + '${long.length > 5 ? long.substring(0, 5) : long}',
+                  ),
+                  AppConstants.kwidth20,
+                  LatLangText(
+                    headText: 'Speed: ',
+                    subtext: speed == 0
+                        ? '00m'
+                        : (speed < 1
+                                    ? '${(speed * 100000).round()}m'
+                                    : '${speed.toStringAsFixed(0)}m')
+                                .substring(0, 2) +
+                            'm',
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -25,6 +25,8 @@ class GetDataFromShared with ChangeNotifier {
     if (jsonString != null) {
       List<dynamic> jsonList = json.decode(jsonString);
       locations = jsonList.map((json) => Map<String, double>.from(json)).toList();
+    }else {
+      locations = []; 
     }
     notifyListeners();
   }

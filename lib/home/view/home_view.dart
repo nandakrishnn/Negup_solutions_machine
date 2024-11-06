@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:negup_solutions_flutter/constants/colors.dart';
 import 'package:negup_solutions_flutter/constants/height_width_constants.dart';
-import 'package:negup_solutions_flutter/home/button_section.dart';
-import 'package:negup_solutions_flutter/home/providers/get_data.dart';
-import 'package:negup_solutions_flutter/widgets/body_container.dart';
+import 'package:negup_solutions_flutter/home/view/button_section.dart';
+import 'package:negup_solutions_flutter/home/view/home_footer.dart';
+import 'package:negup_solutions_flutter/home/services/get_data.dart';
 import 'package:provider/provider.dart';
 
 class HomeViewPage extends StatelessWidget {
@@ -39,22 +39,7 @@ class HomeViewPage extends StatelessWidget {
                 ),
               ),
             ),
-            Consumer<GetDataFromShared>(builder: (context, sharedData, child) {
-              print(sharedData.locations);
-              return sharedData.locations.isEmpty
-                  ? Center(child: Text('No Stored Locations'))
-                  : Expanded(
-                      child: ListView.builder(
-                          itemCount: sharedData.locations.length,
-                          itemBuilder: (context, index) {
-                            final location = sharedData.locations[index];
-                            return BodyContainerFooter(
-                                request: 'Request' + '${index + 1}',
-                                lat: location['latitude']!.toString(),
-                                long: location['longitude']!.toString(),
-                                speed: location['speed']!);
-                          }));
-            })
+            const HomeFooterWidget()
           ],
         ),
       ),

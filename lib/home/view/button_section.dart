@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:negup_solutions_flutter/constants/colors.dart';
-import 'package:negup_solutions_flutter/home/providers/get_data.dart';
-import 'package:negup_solutions_flutter/home/providers/notification_permission_handler.dart';
-import 'package:negup_solutions_flutter/home/providers/permission_provider.dart';
-import 'package:negup_solutions_flutter/home/providers/start_location_update.dart';
+import 'package:negup_solutions_flutter/home/services/get_data.dart';
+import 'package:negup_solutions_flutter/home/services/notification_permission_handler.dart';
+import 'package:negup_solutions_flutter/home/services/permission_provider.dart';
+import 'package:negup_solutions_flutter/home/services/start_location_update.dart';
 import 'package:negup_solutions_flutter/widgets/home_button.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +22,7 @@ class ButtonSection extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 30.0,
             mainAxisSpacing: 30.0,
-            childAspectRatio: 4,
+            childAspectRatio: 4.5,
             children: buildButtonList(context),
           )
         : ListView(
